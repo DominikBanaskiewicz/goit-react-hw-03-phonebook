@@ -14,6 +14,24 @@ export class App extends React.Component {
     ],
     filter: '',
   };
+
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    const { contacts } = this.state;
+    console.log(contacts);
+    if (contacts !== prevState.contacts) {
+      console.log('contacts were updated');
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
+  }
+
   handleContact = (name, number) => {
     let isNameUnique = false;
     const { contacts } = this.state;
